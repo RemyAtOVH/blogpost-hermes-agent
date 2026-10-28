@@ -1,0 +1,24 @@
+# Terraform — provider version is pinned by `~> 2.20` in main.tf, no lock file
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+tfplan
+*.tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Local values & secrets — never commit these
+*.tfvars
+*.tfvars.json
+.env
+*.pem
+id_rsa*
+id_ed25519

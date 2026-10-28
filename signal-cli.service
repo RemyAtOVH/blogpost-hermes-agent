@@ -1,0 +1,26 @@
+# /etc/systemd/system/signal-cli.service
+# Docs: https://hermes-agent.nousresearch.com/docs/user-guide/messaging/signal
+#
+# signal-cli daemon in HTTP mode, bound to localhost ONLY — never expose it remotely.
+# 1. Set SIGNAL_NUMBER to your Signal number (E.164 format).
+# 2. Set User= to the account that ran `signal-cli link` (default VPS user:
+#    `debian` on current OVHcloud Debian images). The link state lives in that
+#    user's ~/.local/share/signal-cli.
+
+[Unit]
+Description=signal-cli daemon (HTTP) for Hermes Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=debian
+Environment=SIGNAL_NUMBER=+33612345678
+ExecStart=/usr/local/bin/signal-cli --account ${SIGNAL_NUMBER} daemon --http 127.0.0.1:8080
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target
